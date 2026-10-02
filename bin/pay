@@ -1,0 +1,43 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# Sends a payment between two Open Payments wallets through the Kiota generated clients.
+# With none of the variables below set, it runs against a stand-in server started in-process.
+#
+#   OP_KEY_ID            key id of the developer key registered on the sending wallet
+#   OP_PRIVATE_KEY_PATH  path to that key's PEM private key
+#   OP_SENDER_WALLET     e.g. https://ilp.interledger-test.dev/alice
+#   OP_RECEIVER_WALLET   e.g. https://ilp.interledger-test.dev/bob
+#   OP_AMOUNT            amount the receiver gets, in its asset scale (default 100)
+#   OP_CALLBACK_HOST     address the approval redirect is received on (default 127.0.0.1)
+#   OP_CALLBACK_PORT     port the approval redirect is received on (default 3344)
+
+require "bundler/setup"
+$stdout.sync = true
+require_relative "../lib/open_payments/demo"
+require_relative "../lib/open_payments/stand_in"
+
+LIVE = %w[OP_KEY_ID OP_PRIVATE_KEY_PATH OP_SENDER_WALLET OP_RECEIVER_WALLET].freeze
+
+def env(name) = ENV.fetch(name) { raise OpenPayments::Demo::Error, "missing #{name} (a live run needs #{LIVE.join(', ')})" }
+
+options = { amount: ENV.fetch("OP_AMOUNT", "100"), callback_host: ENV.fetch("OP_CALLBACK_HOST", "127.0.0.1") }
+begin
+  if LIVE.any? { |name| ENV.key?(name) }
+    OpenPayments::Demo.run(key_id: env("OP_KEY_ID"), private_key: File.read(env("OP_PRIVATE_KEY_PATH")),
+                           sender: env("OP_SENDER_WALLET"), receiver: env("OP_RECEIVER_WALLET"),
+                           callback_port: Integer(ENV.fetch("OP_CALLBACK_PORT", "3344")), **options)
+  else
+    puts "No OP_* variables: paying through a local stand-in, which also plays the browser approval.\nSee the README to pay on the Interledger test network."
+    OpenPayments::StandIn.serve do |stand_in|
+      OpenPayments::Demo.run(key_id: stand_in.key_id, private_key: stand_in.private_key,
+                             sender: stand_in.sender, receiver: stand_in.receiver, callback_port: 0, **options)
+      raise OpenPayments::Demo::Error, "the stand-in rejected:\n#{stand_in.failures.join("\n")}" unless stand_in.failures.empty?
+
+      puts "the stand-in verified the token and signature of all #{stand_in.verified} signed requests"
+    end
+  end
+rescue OpenPayments::Demo::Error => e
+  warn "\n#{e.message}"
+  exit 1
+end

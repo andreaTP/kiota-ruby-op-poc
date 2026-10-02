@@ -1,0 +1,6 @@
+*.pem
+*.key
+.bundle/
+vendor/
+lib/open_payments/generated/
+.claude/settings.local.json

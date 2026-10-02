@@ -1,0 +1,7 @@
+*.pem
+*.key
+.git/
+.bundle/
+.claude/
+vendor/
+lib/open_payments/generated/

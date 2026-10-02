@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Generates the three Open Payments clients into lib/open_payments/generated (or the directory given).
+# With KIOTA set to a kiota binary it runs it; otherwise it builds Kiota and generates in Docker.
+set -euo pipefail
+
+root="$(cd "$(dirname "$0")/.." && pwd)"
+out="${1:-$root/lib/open_payments/generated}"
+rm -rf "$out"
+
+if [ -z "${KIOTA:-}" ]; then
+  engine="$(command -v docker || command -v podman)" || { echo "set KIOTA to a kiota binary, or install Docker" >&2; exit 1; }
+  exec "$engine" build --target generated --output "type=local,dest=$out" "$root"
+fi
+
+specs=https://raw.githubusercontent.com/interledger/open-payments-specifications/e1f499f9e6b8241e8134593c31ff88643a048d51/openapi
+generate() {
+  "$KIOTA" generate --language ruby --openapi "$specs/$1.yaml" --output "$out/$2" \
+    --namespace-name "$3" --class-name "$4" --clean-output --log-level Error
+}
+generate wallet-address-server wallet_address openPayments.walletAddress WalletAddressClient
+generate auth-server auth openPayments.auth AuthClient
+generate resource-server resource openPayments.resource ResourceClient
