@@ -12,7 +12,7 @@ if [ -z "${KIOTA:-}" ]; then
   exec "$engine" build --target generated --output "type=local,dest=$out" "$root"
 fi
 
-specs=https://raw.githubusercontent.com/interledger/open-payments-specifications/e1f499f9e6b8241e8134593c31ff88643a048d51/openapi
+specs=https://raw.githubusercontent.com/interledger/open-payments-specifications/v1.5.0/openapi
 generate() {
   "$KIOTA" generate --language ruby --openapi "$specs/$1.yaml" --output "$out/$2" \
     --namespace-name "$3" --class-name "$4" --clean-output --log-level Error

@@ -2,7 +2,7 @@
 
 A payment sent end to end through [Open Payments](https://openpayments.dev) with Ruby clients that
 [Kiota](https://github.com/microsoft/kiota) generates from the official OpenAPI descriptions
-(Open Payments 1.4.0: wallet address, auth and resource servers).
+(Open Payments 1.5.0: wallet address, auth and resource servers).
 
 The flow is the one in interledger/open-payments-example: read both wallets, get an incoming payment
 grant, create the incoming payment, get a quote grant, create the quote, request an interactive outgoing
@@ -22,8 +22,6 @@ Every call goes through the generated clients. Only two things are written by ha
 docker build -t op-demo .
 docker run --rm op-demo
 ```
-
-The first build takes a few minutes because it builds Kiota from source (see [Kiota build](#kiota-build)).
 
 With no `OP_*` variables, the payment goes through a stand-in server started in the same process
 ([`stand_in.rb`](lib/open_payments/stand_in.rb)). It checks the GNAP token, Content-Digest and Ed25519
@@ -101,12 +99,10 @@ Open the printed link and approve the payment. The browser then goes back to `ht
 and the run continues. `OP_AMOUNT` sets the amount the receiver gets, in its asset scale
 (default `100`, so 1.00 USD). `OP_CALLBACK_PORT` sets the callback port (default `3344`).
 
-## Kiota build
+## Versions
 
-The Ruby generator needs microsoft/kiota#8314 (enum wire values, and unions without a discriminator).
-Until that is released, the Dockerfile builds Kiota from the pull request's head,
-`andreaTP/kiota@c6baaa4`. Pass `--build-arg KIOTA_REPO=... --build-arg KIOTA_REF=...` to build another one.
-The runtime gems are `microsoft_kiota_{abstractions,faraday,serialization_json}` 0.24.0.
+The Dockerfile downloads Kiota v1.38.0 from its GitHub releases (`--build-arg KIOTA_VERSION=...` picks another one).
+The runtime gems are `microsoft_kiota_*` 0.25.3.
 
 The OpenAPI descriptions are pinned to interledger/open-payments-specifications
-[`e1f499f9e`](https://github.com/interledger/open-payments-specifications/tree/e1f499f9e6b8241e8134593c31ff88643a048d51/openapi).
+[`v1.5.0`](https://github.com/interledger/open-payments-specifications/tree/v1.5.0/openapi).

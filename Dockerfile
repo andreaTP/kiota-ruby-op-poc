@@ -1,11 +1,10 @@
-# Kiota with microsoft/kiota#8314, until it is released
-FROM mcr.microsoft.com/dotnet/sdk:10.0 AS kiota
-ARG KIOTA_REPO=https://github.com/andreaTP/kiota
-ARG KIOTA_REF=c6baaa40067a509a6d251c4ab2695f9b84788e86
-RUN mkdir /kiota-src \
- && curl -fsSL "$KIOTA_REPO/archive/$KIOTA_REF.tar.gz" | tar -xz --strip-components=1 -C /kiota-src \
- && dotnet publish /kiota-src/src/kiota/kiota.csproj -c Release -f net10.0 -p:TreatWarningsAsErrors=false -o /opt/kiota \
- && rm -rf /kiota-src
+FROM debian:bookworm-slim AS kiota
+ARG KIOTA_VERSION=v1.38.0
+ARG TARGETARCH
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates curl unzip libicu72 \
+ && arch="$([ "$TARGETARCH" = arm64 ] && echo arm64 || echo x64)" \
+ && curl -fsSL -o /tmp/kiota.zip "https://github.com/microsoft/kiota/releases/download/$KIOTA_VERSION/linux-$arch.zip" \
+ && unzip -q /tmp/kiota.zip -d /opt/kiota && chmod +x /opt/kiota/kiota && rm /tmp/kiota.zip
 
 FROM kiota AS generate
 COPY bin/generate /usr/local/bin/generate

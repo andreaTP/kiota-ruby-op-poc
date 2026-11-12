@@ -2,42 +2,54 @@ GEM
   remote: https://rubygems.org/
   specs:
     diff-lcs (1.6.2)
-    faraday (2.14.4)
-      faraday-net_http (>= 2.0, < 3.5)
+    faraday (2.15.1)
+      faraday-net_http (>= 2.0, < 3.6)
       json
       logger
-    faraday-net_http (3.4.4)
+    faraday-net_http (3.5.0)
       net-http (~> 0.5)
     iso8601 (0.13.0)
-    json (3.0.2)
+    json (3.1.0)
     logger (1.7.0)
-    microsoft_kiota_abstractions (0.24.0)
+    microsoft_kiota_abstractions (0.25.3)
       iso8601 (~> 0.13.0)
-      stduritemplate (>= 0.0.39, < 2.1.0)
-    microsoft_kiota_faraday (0.24.0)
+      stduritemplate (>= 2.0.13, < 2.1.0)
+    microsoft_kiota_faraday (0.25.3)
       faraday (~> 2.7, >= 2.7.2)
-      microsoft_kiota_abstractions (= 0.24.0)
-    microsoft_kiota_serialization_json (0.24.0)
-      json (>= 2.6.3, < 3.1.0)
-      microsoft_kiota_abstractions (= 0.24.0)
+      microsoft_kiota_abstractions (= 0.25.3)
+    microsoft_kiota_serialization_form (0.25.3)
+      microsoft_kiota_abstractions (= 0.25.3)
       uuidtools (>= 2.2, < 3.1)
-    net-http (0.9.1)
+    microsoft_kiota_serialization_json (0.25.3)
+      json (>= 2.6.3, < 3.2.0)
+      microsoft_kiota_abstractions (= 0.25.3)
+      uuidtools (>= 2.2, < 3.1)
+    microsoft_kiota_serialization_multipart (0.25.3)
+      microsoft_kiota_abstractions (= 0.25.3)
+    microsoft_kiota_serialization_text (0.25.3)
+      microsoft_kiota_abstractions (= 0.25.3)
+      uuidtools (>= 2.2, < 3.1)
+    net-http (0.10.0)
+      net-protocol (>= 0.3.0)
       uri (>= 0.11.1)
+    net-protocol (0.4.0)
+      timeout
     rspec (3.13.2)
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
       rspec-mocks (~> 3.13.0)
-    rspec-core (3.13.6)
+    rspec-core (3.13.7)
       rspec-support (~> 3.13.0)
-    rspec-expectations (3.13.5)
+    rspec-expectations (3.13.6)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
-    rspec-mocks (3.13.8)
+    rspec-mocks (3.13.9)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
-    rspec-support (3.13.7)
-    stduritemplate (2.0.12)
-    uri (1.1.1)
+    rspec-support (3.13.8)
+    stduritemplate (2.0.13)
+    timeout (0.6.1)
+    uri (1.1.2)
     uuidtools (3.0.0)
     webrick (1.9.2)
 
@@ -47,31 +59,39 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  microsoft_kiota_abstractions (~> 0.24.0)
-  microsoft_kiota_faraday (~> 0.24.0)
-  microsoft_kiota_serialization_json (~> 0.24.0)
+  microsoft_kiota_abstractions (~> 0.25.3)
+  microsoft_kiota_faraday (~> 0.25.3)
+  microsoft_kiota_serialization_form (~> 0.25.3)
+  microsoft_kiota_serialization_json (~> 0.25.3)
+  microsoft_kiota_serialization_multipart (~> 0.25.3)
+  microsoft_kiota_serialization_text (~> 0.25.3)
   rspec
   webrick
 
 CHECKSUMS
   bundler (4.0.17) sha256=214e21431b5665dd2f99df8a5511c6b151d7a72e8015c8b38f8b775b61cbb6c1
   diff-lcs (1.6.2) sha256=9ae0d2cba7d4df3075fe8cd8602a8604993efc0dfa934cff568969efb1909962
-  faraday (2.14.4) sha256=9bb4408c44621b0dbaaaa39e5dbfc4dbe58cc6751b6eb94d16ae9e1f2f2fab6e
-  faraday-net_http (3.4.4) sha256=0e78af151747ed1b00f33e25973b4bc220d7f16c00c39676817c8b12331eb588
+  faraday (2.15.1) sha256=8708154deda739c5e86cc42b74960e23e8491fce0eba9e11639a6a34b1ac288f
+  faraday-net_http (3.5.0) sha256=2e7094c34e38754ee048cc3df47376f8657005d9375f8473bce1c3b526a22e36
   iso8601 (0.13.0) sha256=298c2b15b7be5fa95a1372813d36a2257656cd8e906dfbc1f5cb409851425aa2
-  json (3.0.2) sha256=8e6d7e7b11384c21230430cef90b71f14849a34a1f4452796670f7c981bd19df
+  json (3.1.0) sha256=3ce7ccf8fde58960177a3a756c31f292a4c1e1dedee884547096a5b0604e3bd8
   logger (1.7.0) sha256=196edec7cc44b66cfb40f9755ce11b392f21f7967696af15d274dde7edff0203
-  microsoft_kiota_abstractions (0.24.0) sha256=78c66e57adb389ea900d6e7b58c38c35a9059ee6101e8550404a91edeafe7b58
-  microsoft_kiota_faraday (0.24.0) sha256=cd9907aab25f220449f1b92ffff5890b2183ffbc7b8e22b6a4f29b1d8bf39e63
-  microsoft_kiota_serialization_json (0.24.0) sha256=f4b34db8b678c9e7116b1d9e401d5dc7c1ddfe397e9401dc55bb9546328f21ac
-  net-http (0.9.1) sha256=25ba0b67c63e89df626ed8fac771d0ad24ad151a858af2cc8e6a716ca4336996
+  microsoft_kiota_abstractions (0.25.3) sha256=ed4b0b7ba4d81f63a4e8c9f61e8fb0760e8a9f0bda72089916839d6e758e5098
+  microsoft_kiota_faraday (0.25.3) sha256=dd45f0d90161d21d5f604b1305475bb97436591815b0ad1d393c34c3f301a3b8
+  microsoft_kiota_serialization_form (0.25.3) sha256=d27c9f9f6bf6a924c894cf4725f9721bfe9fa6b18f4e3a199185c29a5ef3cabc
+  microsoft_kiota_serialization_json (0.25.3) sha256=71008baff31e8c5498fde92c8ba4f0081c3f48f7843fd2a7aa6a71f4d044901c
+  microsoft_kiota_serialization_multipart (0.25.3) sha256=a0b6057626b6d302d452bbbc80ab2f6be6af65933c2a989df48e465054516e74
+  microsoft_kiota_serialization_text (0.25.3) sha256=3600d7b9e9924beceb1adfd24ffab5dde8309eb2ede5b370c36595a798c1c248
+  net-http (0.10.0) sha256=1a2ff6e37a05724973c43f2bf7bf105f59c36a4cd0a7e9b1c021a0a566987c27
+  net-protocol (0.4.0) sha256=f9f90c8c6f64794a45160bf422177a336db12809de3beeeaa26b88fcd2e8c853
   rspec (3.13.2) sha256=206284a08ad798e61f86d7ca3e376718d52c0bc944626b2349266f239f820587
-  rspec-core (3.13.6) sha256=a8823c6411667b60a8bca135364351dda34cd55e44ff94c4be4633b37d828b2d
-  rspec-expectations (3.13.5) sha256=33a4d3a1d95060aea4c94e9f237030a8f9eae5615e9bd85718fe3a09e4b58836
-  rspec-mocks (3.13.8) sha256=086ad3d3d17533f4237643de0b5c42f04b66348c28bf6b9c2d3f4a3b01af1d47
-  rspec-support (3.13.7) sha256=0640e5570872aafefd79867901deeeeb40b0c9875a36b983d85f54fb7381c47c
-  stduritemplate (2.0.12) sha256=40faf3eddf90cc9c8d236ada14abef2dc967204be825fd9a5a915e9317db1f00
-  uri (1.1.1) sha256=379fa58d27ffb1387eaada68c749d1426738bd0f654d812fcc07e7568f5c57c6
+  rspec-core (3.13.7) sha256=c64ff16d9788119805cbc6a3f4b6d87cc22417c2d25976a3330de136896b5469
+  rspec-expectations (3.13.6) sha256=bf538ca6d367ff5b0d85a87fdb5c0c6038f2cd1308a0eeba07476caa02d22f35
+  rspec-mocks (3.13.9) sha256=ea5c7ff3054a6098ca6039aacef80aec69d5a8a3ef80be8fc88337359b672a30
+  rspec-support (3.13.8) sha256=e4160030309b7e3e9d9863dfe720a35dfcc577162f5402cd68fc8c5258a0ffd6
+  stduritemplate (2.0.13) sha256=8eeb7bb7db5232f37b1a0c4c4493d7d2035b57d1c982ee668333e6885e5b7f46
+  timeout (0.6.1) sha256=78f57368a7e7bbadec56971f78a3f5ecbcfb59b7fcbb0a3ed6ddc08a5094accb
+  uri (1.1.2) sha256=89292e98eabbef6248b0a0ed5e7e398e152f83f17560023a6d94a7f492b169fb
   uuidtools (3.0.0) sha256=47a3d4d20e728f522c675be8bc4e001252db39864c97deb194dc543b153a4be8
   webrick (1.9.2) sha256=beb4a15fc474defed24a3bda4ffd88a490d517c9e4e6118c3edce59e45864131
 

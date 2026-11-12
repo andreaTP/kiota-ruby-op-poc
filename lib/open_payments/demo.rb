@@ -150,7 +150,7 @@ module OpenPayments
       10.times do |attempt|
         sleep 2 unless attempt.zero?
         received = step("read the incoming payment") do
-          resource(receiver, incoming_token).incoming_payments.by_id(last_segment(incoming.id)).get.resume.incoming_payment_with_methods
+          resource(receiver, incoming_token).incoming_payments.by_id(last_segment(incoming.id)).get.resume.incoming_payment_with_access_token
         end
         say "received #{received.received_amount&.value} of #{received.incoming_amount&.value} #{received.incoming_amount&.asset_code}, " \
             "completed: #{received.completed.inspect}"
